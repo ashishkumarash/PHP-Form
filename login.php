@@ -1,4 +1,22 @@
 <?php
+    error_reporting(0);
+    $conn = mysqli_connect("localhost","root","","login"); 
+    if(isset($_POST["submit"])){
+        $username = $_POST['user'];  
+        $password = $_POST['password']; 
+
+  
+        $sql = "select * from login where '$username' = Email && '$password' = password limit 1";  
+        $result = mysqli_query($conn, $sql);  
+        $row = mysqli_fetch_array($result);
+          
+        if($username==$row['Email'] && $password==$row['password']){  
+            echo "<h1><center> Login successful </center></h1>";  
+        }  
+        else{  
+            echo "<h1> Login failed. Invalid username or password.</h1>";  
+        }     
+}
 ?>
 
 
@@ -12,6 +30,7 @@
 body{
     background-color:#d10909;
     display: flex;
+    flex-direction:column;
     justify-content: center;
     align-items: center;
 }
@@ -62,24 +81,29 @@ button {
 a{
     text-decoration: none;
 }
+.container{
+    border-radius:3px;
+    box-shadow: 0 0 10px rgb(0 0 0 / 0.5);
+}
 </style>
 
     </head>
 <body>
-    
+    <form method="POST">
     <div class="container">
     <h2>Login</h2>
     <div class="div1">    
-        <input type="text" placeholder="Email" name="Email" require>
-        <input type = "text" placeholder="Password" name="Password" require>
+        <input type="text" placeholder="Email" name="user" required>
+        <input type = "text" placeholder="Password" name="password" required>
         <a href="#">forgot Password</a>
         <div class="btn">
             <button type="submit"><a href="index.php">REGISTER</a></button>
-            <button type="submit">SIGN IN</button>
+            <button type="submit" name="submit">SIGN IN</button>
         </div>
     </div>
 
 
     </div>
+</form>
 </body>   
 </html>
